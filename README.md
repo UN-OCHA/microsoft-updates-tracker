@@ -69,7 +69,7 @@ Each item is summarised once. It's summarised again only if Microsoft changes it
 | Variable | Purpose |
 | --- | --- |
 | `SITE_URL` | Public site URL used in emails. Default `https://jayasekhon.github.io/Microsoft-Updates-Tracker/` |
-| `DIGEST_FROM_NAME` | Sender display name. Default "Copilot Update Tracker" |
+| `DIGEST_FROM_NAME` | Sender display name. Default "Copilot Radar" |
 
 ### 5. Test it
 **Actions → Tracker → Run workflow**:

@@ -5,7 +5,7 @@ Environment:
   GMAIL_APP_PASSWORD   a Google "App password" (needs 2-Step Verification on the account)
   DIGEST_TO            comma-separated visible recipients — ideally one Outlook distribution list
   DIGEST_BCC           optional comma-separated hidden recipients
-  DIGEST_FROM_NAME     optional display name (default "Copilot Update Tracker")
+  DIGEST_FROM_NAME     optional display name (default "Copilot Radar")
 """
 
 from __future__ import annotations
@@ -33,7 +33,7 @@ def send(subject: str, html: str, text: str, *, to: list[str] | None = None) -> 
 
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = formataddr((os.environ.get("DIGEST_FROM_NAME") or "Copilot Update Tracker", sender))
+    msg["From"] = formataddr((os.environ.get("DIGEST_FROM_NAME") or "Copilot Radar", sender))
     msg["To"] = ", ".join(to_list) if to_list else sender
     msg["Message-ID"] = make_msgid(domain=sender.split("@")[-1])
     msg.set_content(text)

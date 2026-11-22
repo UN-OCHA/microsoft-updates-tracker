@@ -279,10 +279,18 @@ def _item_html(entry: dict, names: dict) -> str:
     change_html = (f'<div style="{_FONT}font-size:12px;color:#03558c;font-weight:600;padding-top:6px;">{escape(change)}</div>'
                    if change else "")
     more = item.get("more_info_url")
-    links = f'<a href="{escape(item["url"])}" style="color:#4f2fd6;font-weight:600;text-decoration:none;">Read on Microsoft &rarr;</a>'
+    # "View in tracker" is the main button (a table cell, so Outlook keeps the fill); Microsoft links follow, plain.
+    secondary = f'<a href="{escape(item["url"])}" style="color:#6b7280;text-decoration:underline;">Read on Microsoft</a>'
     if more and more != item["url"]:
-        links += f' &nbsp;·&nbsp; <a href="{escape(more)}" style="color:#4f2fd6;text-decoration:none;">More info</a>'
-    links += f' &nbsp;·&nbsp; <a href="{escape(_item_link(item))}" style="color:#6b7280;text-decoration:none;">View in tracker</a>'
+        secondary += f' &nbsp;·&nbsp; <a href="{escape(more)}" style="color:#6b7280;text-decoration:underline;">More info</a>'
+    links = (
+        '<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>'
+        f'<td bgcolor="#4f2fd6" style="background:#4f2fd6;border-radius:8px;">'
+        f'<a href="{escape(_item_link(item))}" style="{_FONT}display:inline-block;padding:7px 14px;font-size:13px;font-weight:700;'
+        f'line-height:18px;color:#ffffff;text-decoration:none;border-radius:8px;">View in tracker &rarr;</a></td>'
+        f'<td style="{_FONT}padding-left:14px;font-size:13px;line-height:18px;">{secondary}</td>'
+        '</tr></table>'
+    )
 
     return f"""
 <tr><td style="padding:0 0 14px 0;">
@@ -437,7 +445,8 @@ def render_text(digest: dict) -> str:
             lines.append(f"  {ai.get('summary') or item.get('description', '')[:280]}")
             if ai.get("action_note"):
                 lines.append(f"  What to do: {ai['action_note']}")
-            lines.append(f"  {item['url']}")
+            lines.append(f"  View in tracker: {_item_link(item)}")
+            lines.append(f"  Read on Microsoft: {item['url']}")
             lines.append("")
     if digest["horizon"]:
         total = sum(len(g["items"]) for g in digest["horizon"])

@@ -374,6 +374,12 @@ class DigestTests(unittest.TestCase):
         self.assertIn("Copilot Chat &amp; &lt;b&gt;tips&lt;/b&gt;", html)
         self.assertIn("Oct 19 – Oct 25, 2026", digest.subject(d))
         self.assertIn("NOW AVAILABLE (1)", digest.render_text(d))
+        # "View in tracker" is the highlighted button and comes before the plain Microsoft link.
+        card = html[html.index("Copilot Chat &amp; &lt;b&gt;tips"):]
+        self.assertLess(card.index("View in tracker"), card.index("Read on Microsoft"))
+        self.assertIn('bgcolor="#4f2fd6"', card[:card.index("View in tracker")])
+        text = digest.render_text(d)
+        self.assertLess(text.index("View in tracker: "), text.index("Read on Microsoft: "))
 
     def test_horizon_is_next_30_days_by_month(self):
         # Nov 2: window ends Dec 1, one day into December -> November only.
@@ -393,6 +399,26 @@ class DigestTests(unittest.TestCase):
     def test_default_window_is_previous_week(self):
         self.assertEqual(digest.default_window(date(2026, 11, 2)), (date(2026, 10, 26), date(2026, 11, 2)))
         self.assertEqual(digest.default_window(date(2026, 11, 4)), (date(2026, 10, 26), date(2026, 11, 2)))
+
+
+class MailerTests(unittest.TestCase):
+    def test_sender_name_defaults_to_copilot_radar(self):
+        sent = {}
+
+        class FakeSMTP:
+            def __init__(self, *a, **k): pass
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def login(self, *a): pass
+            def send_message(self, msg, to_addrs): sent["from"], sent["to"] = msg["From"], to_addrs
+
+        from tracker import mailer
+        env = {"GMAIL_ADDRESS": "radar@gmail.com", "GMAIL_APP_PASSWORD": "abcd efgh", "DIGEST_TO": "a@x.com, b@x.com",
+               "DIGEST_BCC": "", "DIGEST_FROM_NAME": ""}
+        with mock.patch.dict(os.environ, env), mock.patch.object(mailer.smtplib, "SMTP_SSL", FakeSMTP):
+            mailer.send("S", "<p>h</p>", "t")
+        self.assertEqual(sent["from"], "Copilot Radar <radar@gmail.com>")
+        self.assertEqual(sent["to"], ["a@x.com", "b@x.com"])
 
 
 class UtilTests(unittest.TestCase):
