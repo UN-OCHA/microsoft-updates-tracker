@@ -1127,7 +1127,7 @@
    "first_seen": "2026-10-29",
    "id": "post-8d334ff70e25",
    "kind": "post",
-   "last_seen": "2026-11-22",
+   "last_seen": "2026-11-23",
    "modified": "2026-07-30",
    "product": "m365",
    "source": "Microsoft 365 / Copilot blog",
@@ -1270,7 +1270,7 @@
    "first_seen": "2026-10-29",
    "id": "post-a179a9653651",
    "kind": "post",
-   "last_seen": "2026-11-22",
+   "last_seen": "2026-11-23",
    "modified": "2026-09-10",
    "product": "studio",
    "source": "Microsoft 365 / Copilot blog",
@@ -1346,7 +1346,7 @@
    "first_seen": "2026-10-29",
    "id": "post-a27861e281d3",
    "kind": "post",
-   "last_seen": "2026-11-22",
+   "last_seen": "2026-11-23",
    "modified": "2026-06-25",
    "product": "m365",
    "source": "Microsoft 365 / Copilot blog",
@@ -1710,7 +1710,7 @@
    "first_seen": "2026-10-29",
    "id": "post-e42016017989",
    "kind": "post",
-   "last_seen": "2026-11-22",
+   "last_seen": "2026-11-23",
    "modified": "2026-09-03",
    "product": "m365",
    "source": "Microsoft 365 / Copilot blog",
@@ -1930,7 +1930,7 @@
    "first_seen": "2026-10-29",
    "id": "post-ff3efcc7b41e",
    "kind": "post",
-   "last_seen": "2026-11-22",
+   "last_seen": "2026-11-23",
    "modified": "2026-09-10",
    "product": "m365",
    "source": "Microsoft 365 / Copilot blog",
@@ -35191,10 +35191,10 @@
  "meta": {
   "last_counts": {
    "changed": 0,
-   "new": 5,
+   "new": 0,
    "removed": 0
   },
-  "updated_at": "2026-11-23T05:23:42+00:00",
+  "updated_at": "2026-11-23T18:43:11+00:00",
   "warnings": []
  },
  "schema": 1
